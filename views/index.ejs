@@ -1,0 +1,182 @@
+
+<%- include('partials/_header.ejs') %>
+<body>
+    <div class="tm-page-wrap mx-auto">
+        <div class="position-relative">
+            <div class="position-absolute tm-site-header">
+                <div class="container-fluid position-relative">
+                    <div class="row">
+
+                        <%- include('partials/_navbar.ejs') %>
+                    </div>
+
+                </div>
+            </div>
+            <div class="tm-welcome-container text-center text-white">
+                <div class="tm-welcome-container-inner">
+                    <p class="tm-welcome-text mb-1 text-white">Video Catalog is brought to you by TemplateMo.</p>
+                    <p class="tm-welcome-text mb-5 text-white">This is a full-width video banner.</p>
+                    <a href="#content" class="btn tm-btn-animate tm-btn-cta tm-icon-down">
+                        <span>Discover</span>
+                    </a>
+                </div>
+            </div>
+
+            <div id="tm-video-container">
+                <img src="img\bg-index.jpg" alt="" srcset="">  
+            </div>
+            
+            <i id="tm-video-control-button" class="fas fa-pause"></i>
+        </div>
+
+        <div class="container-fluid">
+            <div id="content" class="mx-auto tm-content-container">
+                <main>
+                    <div class="row">
+                        <div class="col-12">
+                            <h2 class="tm-page-title mb-4">Our Video Catalog</h2>
+                            <div class="tm-categories-container mb-5">
+                                <h3 class="tm-text-primary tm-categories-text">Categories:</h3>
+                                <ul class="nav tm-category-list">
+                                    <li class="nav-item tm-category-item"><a href="#" class="nav-link tm-category-link active">All</a></li>
+                                    <li class="nav-item tm-category-item"><a href="#" class="nav-link tm-category-link">Drone Shots</a></li>
+                                    <li class="nav-item tm-category-item"><a href="#" class="nav-link tm-category-link">Nature</a></li>
+                                    <li class="nav-item tm-category-item"><a href="#" class="nav-link tm-category-link">Actions</a></li>
+                                    <li class="nav-item tm-category-item"><a href="#" class="nav-link tm-category-link">Featured</a></li>
+                                </ul>
+                            </div>        
+                        </div>
+                    </div>
+                    <!-- Photo Catalogs -->
+                    <div class="row tm-catalog-item-list">
+            
+                        
+                            <% photos.forEach(element => { %>
+                                <div class="col-lg-4 col-md-6 col-sm-12 tm-catalog-item">
+                                    <div class="position-relative tm-thumbnail-container">
+                                        <img src="<%= element.image %> " alt="Image" class="img-fluid tm-catalog-item-img">    
+                                        <a href="/photo/<%= element._id %> " class="position-absolute tm-img-overlay">
+                                            <i class="fas fa-play tm-overlay-icon"></i>
+                                        </a>
+                                    </div>    
+                                    <div class="p-4 tm-bg-gray tm-catalog-item-description">
+                                        <h3 class="tm-text-primary mb-3 tm-catalog-item-title"> <%= element.title %>  </h3>
+                                        <p class="tm-catalog-item-text"> <%= element.description %>   </p>
+                                    </div>
+                                </div>
+                            <% }) %>
+                            
+                        
+                           
+                       
+                        
+            
+                    </div>
+                    
+                    <!-- Catalog Paging Buttons -->
+                    <div>
+                        <% if (totalPage > 0 ) { %> <!-- Toplam sayfa sayısı 0'dan büyük ise aşağıdakileri yap -->
+                            
+                            <ul class="nav tm-paging-links">
+
+                                <% for( let i = 1; i <= totalPage; i++ ) { %> <!-- Toplam sayfa sayfa sayısına ulaşana kadar sayfa butonunu 1 arttır-->
+                                    <% if (currentPage == i ) { %> <!-- eğer ki url'deki sayfa saysı, for döngüsündeki sayısa eşit ise active class'lı olanı göster -->
+
+                                            <li class="nav-item active"><a href="/?page=<%= i %>" class="nav-link tm-paging-link"><%= i %> </a></li>
+
+                                    <% } else if ( i <= 18 ) { %>  <!-- Eğer şuan ki sayfa sayısı 18'den küçük veya eşit ise sadece 18 tane (sayfaya bu kadar sığıyor) sayfa numarası göster -->
+                                        
+                                            <li class="nav-item"><a href="/?page=<%= i %>" class="nav-link tm-paging-link"><%= i  %> </a></li>
+                                        <% }  %>  
+                                <% } %>
+                                        <% if (currentPage < totalPage) { %> <!-- Eğer şuan ki sayfa toplam sayfa sayısından küçük ise sayfa butonlarının yanına last butonu koy-->
+                                            
+                                            <li class="nav-item"><a href="/?page=<%= totalPage %>"  class="nav-link tm-paging-link"> last </a></li>
+                                        <% } %>
+                            </ul>
+                        <% } %>
+                        
+                    </div>
+                </main>
+
+                <!-- Subscribe form and footer links -->
+                <%- include ('partials/_footer.ejs') %> 
+                <!-- row -->
+
+                <footer class="row pt-5">
+                    <div class="col-12">
+                        <p class="text-right">Copyright 2020 The Video Catalog Company 
+                        
+                        - Designed by <a href="https://templatemo.com" rel="nofollow" target="_parent">TemplateMo</a></p>
+                    </div>
+                </footer>
+            </div> <!-- tm-content-container -->
+        </div>
+
+    </div> <!-- .tm-page-wrap -->
+
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script>
+        function setVideoSize() {
+            const vidWidth = 1920;
+            const vidHeight = 1080;
+            let windowWidth = window.innerWidth;
+            let newVidWidth = windowWidth;
+            let newVidHeight = windowWidth * vidHeight / vidWidth;
+            let marginLeft = 0;
+            let marginTop = 0;
+
+            if (newVidHeight < 500) {
+                newVidHeight = 500;
+                newVidWidth = newVidHeight * vidWidth / vidHeight;
+            }
+
+            if(newVidWidth > windowWidth) {
+                marginLeft = -((newVidWidth - windowWidth) / 2);
+            }
+
+            if(newVidHeight > 720) {
+                marginTop = -((newVidHeight - $('#tm-video-container').height()) / 2);
+            }
+
+            const tmVideo = $('#tm-video');
+
+            tmVideo.css('width', newVidWidth);
+            tmVideo.css('height', newVidHeight);
+            tmVideo.css('margin-left', marginLeft);
+            tmVideo.css('margin-top', marginTop);
+        }
+
+        $(document).ready(function () {
+            /************** Video background *********/
+
+            setVideoSize();
+
+            // Set video background size based on window size
+            let timeout;
+            window.onresize = function () {
+                clearTimeout(timeout);
+                timeout = setTimeout(setVideoSize, 100);
+            };
+
+            // Play/Pause button for video background      
+            const btn = $("#tm-video-control-button");
+
+            btn.on("click", function (e) {
+                const video = document.getElementById("tm-video");
+                $(this).removeClass();
+
+                if (video.paused) {
+                    video.play();
+                    $(this).addClass("fas fa-pause");
+                } else {
+                    video.pause();
+                    $(this).addClass("fas fa-play");
+                }
+            });
+        })
+    </script>
+</body>
+
+</html>
