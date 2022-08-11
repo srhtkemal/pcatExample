@@ -4,7 +4,7 @@
   "description": "Pcat photo app",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "start":"node app.js"
   },
   "repository": {
     "type": "git",
@@ -17,9 +17,7 @@
   ],
   "author": "Serhat",
   "license": "ISC",
-  "bugs": {
-
-  },
+  "bugs": {},
   "homepage": "",
   "devDependencies": {
     "nodemon": "^2.0.19",

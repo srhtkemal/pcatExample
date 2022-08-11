@@ -1,20 +1,24 @@
 const ejs = require('ejs'),
-      express = require('express'),
-      mongoose = require('mongoose'),
-      fileUpload = require('express-fileupload'),
-      methodOverride = require('method-override');
+  express = require('express'),
+  mongoose = require('mongoose'),
+  fileUpload = require('express-fileupload'),
+  methodOverride = require('method-override');
 
 const photo = require('./models/Photo'), // oluşturduğum schemayı aldım
-      photoController = require('./controllers/photoController'),
-      pageController = require('./controllers/pageController');
+  photoController = require('./controllers/photoController'),
+  pageController = require('./controllers/pageController');
 
 const app = express();
 
 //Database connect
 mongoose
-.connect('mongodb://localhost/pcat-test-db')
-.then( response =>{ console.log(response + '\nDB CONNECTED')})
-.catch( err => console.log(err + '\nDB CONNECTİON ERROR'))
+  .connect(
+    'mongodb+srv://serhaatkemal:rZWM_7SAJ2S-r2Y@cluster0.ry3zh7y.mongodb.net/?retryWrites=true&w=majority'
+  )
+  .then((response) => {
+    console.log(response + '\nDB CONNECTED');
+  })
+  .catch((err) => console.log(err + '\nDB CONNECTION ERROR'));
 
 //VİEW ENGİNE
 app.set('view engine', 'ejs');
